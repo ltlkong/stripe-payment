@@ -1,4 +1,3 @@
-from turtle import st
 from flask_restful import Resource, reqparse
 from clients.stripeClient import StripeClient
 from clients.orderClient import OrderClient

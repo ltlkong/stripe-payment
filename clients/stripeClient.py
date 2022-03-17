@@ -5,11 +5,11 @@ class StripeClient:
     def __init__(self):
         stripe.api_key = getenv('STRIPE_API_KEY')
 
-    def create_checkout_session(self, orderId, currency, amount,token):
+    def createCheckoutSession(self, orderId, currency, amount,token, methods):
         try:
-            order = self.__create_stripe_order(orderId)
+            order = self._createStripeOrder(orderId)
 
-            price = self.__create_price(order.id, currency, amount)
+            price = self._createPrice(order.id, currency, amount)
 
             checkout = stripe.checkout.Session.create(
                 line_items=[
@@ -19,20 +19,26 @@ class StripeClient:
                     },
                 ],
                 mode='payment',
+                payment_method_types=methods,
                 success_url=getenv('DOMAIN')+getenv('STRIPE_PAYMENT_CALLBACK_URI')+'?token='+token,
                 cancel_url=getenv("DOMAIN")+getenv('STRIPE_PAYMENT_CALLBACK_URI')+'?token='+token,
             )
-
-            return checkout
         except Exception as e:
             print(e)
 
-            return None
-    
-    def retrieve_checkout(self,checkoutId):
-        return stripe.checkout.Session.retrieve(checkoutId)
+            return None, str(e)
 
-    def __create_price(self,stripeOrderId, currency, amount):
+        return checkout, 'success'
+    
+    def retrieveCheckout(self,checkoutId):
+        return stripe.checkout.Session.retrieve(checkoutId)
+    
+    def retrievePaymentMethod(self,paymentIntentId):
+        paymentIntent = stripe.PaymentIntent.retrieve(paymentIntentId)
+
+        return stripe.PaymentMethod.retrieve(paymentIntent['payment_method'])
+
+    def _createPrice(self,stripeOrderId, currency, amount):
         price = stripe.Price.create(
             unit_amount=amount,
             currency=currency,
@@ -41,6 +47,6 @@ class StripeClient:
 
         return price
 
-    def __create_stripe_order(self,orderId):
+    def _createStripeOrder(self,orderId):
         return stripe.Product.create(name=orderId)
     

@@ -1,6 +1,5 @@
 from models.share import db
 from models.transaction import Transaction
-from datetime import datetime
 from common.uuidUtil import UuidUtil
 
 class TransactionService:
@@ -15,18 +14,20 @@ class TransactionService:
         transaction = db.session.query(Transaction).filter_by(token=token).first()
         return transaction
 
-    def updateTransactionStatus(self, transaction, newStatus):
-        if transaction.status != newStatus:
-            transaction.updatedTime = datetime.now()
-        transaction.status = newStatus
-        db.session.commit()
+    def createTransaction(self, orderId):
+        transaction = Transaction(orderId=orderId,token=self.uuidUtil.generateUUID())
 
-    def createTransaction(self, orderId, amount, currency):
-        transaction = Transaction(orderId=orderId, amount=amount, currency=currency, status='open', token=self.uuidUtil.generateUUID())
-        db.session.add(transaction)
-        db.session.commit()
+        try:
+            db.session.add(transaction)
+            db.session.commit()
 
-        return transaction
+            return transaction
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+
+            return None
+
     
     def updateSessionId(self, transaction, stripeSessionId):
         transaction.stripeSessionId = stripeSessionId

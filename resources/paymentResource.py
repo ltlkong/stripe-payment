@@ -1,7 +1,7 @@
+from flask import session
 from flask_restful import Resource, reqparse
 from clients.stripeClient import StripeClient
-from uuid import uuid4
-from models.transaction import Transaction
+from clients.orderClient import OrderClient
 from services.transactionService import TransactionService
 
 class PaymentResource(Resource):
@@ -9,6 +9,7 @@ class PaymentResource(Resource):
         self.stripeClient = StripeClient()
         self.parser = reqparse.RequestParser()
         self.transactionService = TransactionService()
+        self.orderClient = OrderClient()
     
     def get(self):
         # Getting the data from the request
@@ -23,14 +24,30 @@ class PaymentResource(Resource):
         if transaction is None:
             return {'message':'Transaction not found'},404
 
-        # Retrieving the checkout session from stripe api
-        stripeSession = self.stripeClient.retrieve_checkout(transaction.stripeSessionId)
-        
-        self.transactionService.updateTransactionStatus(transaction, stripeSession['status'])
+        # Retrieving the object from stripe api
+        try:
+            stripeSession = self.stripeClient.retrieveCheckout(transaction.stripeSessionId)
+            payment = self.stripeClient.retrievePaymentMethod(stripeSession['payment_intent'])
+        except Exception as e:
+            return {'message':str(e)},500
+
+        # Preparing the data
+        status= stripeSession['status']
+        paymentMethod = payment['type']
+        paymentAmount = stripeSession['amount_total']
+        paymentCurrency = stripeSession['currency']
+
+        # Updating the order status
+        self.orderClient.updateOrderStatus(transaction.orderId, status)
 
         return {
             'order_id': transaction.orderId,
-            'status': transaction.status,
+            'status': status,
+            'payment': {
+                'method':paymentMethod,
+                'amount':paymentAmount,
+                'currency':paymentCurrency,
+            }
         }
 
 
@@ -44,19 +61,24 @@ class PaymentResource(Resource):
         args = parser.parse_args()
 
         # Store transaction in database
-        transaction = self.transactionService.createTransaction(orderId=args['orderId'], amount=args['amount'], currency=args['currency'])
+        transaction = self.transactionService.createTransaction(orderId=args['orderId'])
+
+        if transaction is None:
+            return {'message':'Error creating transaction'},500
 
         # Creating the checkout session from stripe api
-        checkout  = self.stripeClient.create_checkout_session(args['orderId'], args['currency'], args['amount'], transaction.token)
+        sessionResponse  = self.stripeClient.createCheckoutSession(args['orderId'], args['currency'], args['amount'], transaction.token, ['card', 'alipay'])
+
+        checkout =sessionResponse[0]
+        sessionMessage = sessionResponse[1]
 
         if checkout is None:
-            return {'message':'Error creating checkout session'},500
+            return {'message': sessionMessage},500
         
         self.transactionService.updateSessionId(transaction, checkout['id'])
 
         return {
             'order_id': args['orderId'],
-            'method':'card',
             'payment_url': checkout.url,
-            } 
+            } , 201
          

@@ -14,11 +14,11 @@ class PaymentResource(Resource):
         # Getting the data from the request
         parser = self.parser
 
-        parser.add_argument('orderId', type=str)
+        parser.add_argument('token', type=str)
         args = parser.parse_args()
 
         # Retrieving the transaction from database
-        transaction= self.transactionService.getTransactionByOrderId(args['orderId'])
+        transaction= self.transactionService.getTransactionByToken(args['token'])
 
         if transaction is None:
             return {'message':'Transaction not found'},404
@@ -29,7 +29,7 @@ class PaymentResource(Resource):
         self.transactionService.updateTransactionStatus(transaction, stripeSession['status'])
 
         return {
-            'orderId': transaction.orderId,
+            'order_id': transaction.orderId,
             'status': transaction.status,
         }
 
@@ -43,17 +43,19 @@ class PaymentResource(Resource):
         parser.add_argument('amount', type=int)
         args = parser.parse_args()
 
+        # Store transaction in database
+        transaction = self.transactionService.createTransaction(orderId=args['orderId'], amount=args['amount'], currency=args['currency'])
+
         # Creating the checkout session from stripe api
-        checkout  = self.stripeClient.create_checkout_session(args['orderId'], args['currency'], args['amount'])
+        checkout  = self.stripeClient.create_checkout_session(args['orderId'], args['currency'], args['amount'], transaction.token)
 
         if checkout is None:
             return {'message':'Error creating checkout session'},500
-
-        # Store transaction in database
-        transaction = self.transactionService.createTransaction(orderId=args['orderId'], amount=args['amount'], currency=args['currency'], stripeSessionId=checkout['id'])
+        
+        self.transactionService.updateSessionId(transaction, checkout['id'])
 
         return {
-            'orderId': args['orderId'],
+            'order_id': args['orderId'],
             'method':'card',
             'payment_url': checkout.url,
             } 

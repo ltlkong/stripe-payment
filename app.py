@@ -11,7 +11,7 @@ load_dotenv()
 
 # Initialize the app
 app = Flask(__name__)
-api = Api(app,prefix="/api/v1")
+api = Api(app,prefix="/api/"+environ.get('API_VERSION'))
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('MYSQL_URL')

@@ -1,6 +1,6 @@
 # Payment service
 
-[stripe]('https://stripe.com/en-ca') implementation
+[stripe](https://stripe.com/en-ca) implementation
 
 
 ## Start the project

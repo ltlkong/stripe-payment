@@ -1,0 +1,6 @@
+requests 
+flask 
+flask_restful 
+python-dotenv 
+Flask-SQLAlchemy 
+stripe

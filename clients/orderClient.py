@@ -3,8 +3,10 @@ import requests
 class OrderClient:
     baseUrl = 'https://jsonplaceholder.typicode.com/todos/'
 
+    def updateOrderStatus(self):
+        pass
+
     def getOrderById(self, orderId):
-        order  = requests.get(self.baseUrl).json()
 
         return { 
             "code": 200, 

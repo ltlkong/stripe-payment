@@ -23,3 +23,7 @@
 - models/ (Data models)
 - common/ (Util classes)
 - resources/ (Controllers deal with requests)
+
+## Flow
+
+![flow](./flow.drawio.png)

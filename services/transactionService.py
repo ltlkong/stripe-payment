@@ -31,8 +31,18 @@ class TransactionService:
     
     def updateSessionId(self, transaction, stripeSessionId):
         transaction.stripeSessionId = stripeSessionId
-        db.session.commit()
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
     
     def updateToken(self, transaction):
         transaction.token = self.uuidUtil.generateUUID()
-        db.session.commit()
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()

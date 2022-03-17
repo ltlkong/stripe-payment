@@ -1,4 +1,4 @@
-from flask import session
+from turtle import st
 from flask_restful import Resource, reqparse
 from clients.stripeClient import StripeClient
 from clients.orderClient import OrderClient
@@ -25,11 +25,15 @@ class PaymentResource(Resource):
             return {'message':'Transaction not found'},404
 
         # Retrieving the object from stripe api
-        try:
-            stripeSession = self.stripeClient.retrieveCheckout(transaction.stripeSessionId)
-            payment = self.stripeClient.retrievePaymentMethod(stripeSession['payment_intent'])
-        except Exception as e:
-            return {'message':str(e)},500
+        stripeSession = self.stripeClient.retrieveCheckout(transaction.stripeSessionId)
+
+        if stripeSession is None:
+            return {'message':'Error retrieve payment session'},500
+
+        payment = self.stripeClient.retrievePaymentMethod(stripeSession['payment_intent'])
+
+        if payment is None:
+            return {'message':'Error retrieve payment'},500
 
         # Preparing the data
         status= stripeSession['status']

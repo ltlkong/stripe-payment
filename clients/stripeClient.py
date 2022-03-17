@@ -31,12 +31,22 @@ class StripeClient:
         return checkout, 'success'
     
     def retrieveCheckout(self,checkoutId):
-        return stripe.checkout.Session.retrieve(checkoutId)
+        try:
+            return stripe.checkout.Session.retrieve(checkoutId)
+        except Exception as e:
+            print(e)
+
+            return None
     
     def retrievePaymentMethod(self,paymentIntentId):
-        paymentIntent = stripe.PaymentIntent.retrieve(paymentIntentId)
+        try:
+            paymentIntent = stripe.PaymentIntent.retrieve(paymentIntentId)
 
-        return stripe.PaymentMethod.retrieve(paymentIntent['payment_method'])
+            return stripe.PaymentMethod.retrieve(paymentIntent['payment_method'])
+        except Exception as e:
+            print(e)
+
+            return None
 
     def _createPrice(self,stripeOrderId, currency, amount):
         price = stripe.Price.create(

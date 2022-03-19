@@ -4,6 +4,7 @@ from os import environ
 from dotenv import load_dotenv
 from routes import init_routes
 from models.share import db
+from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
@@ -11,6 +12,7 @@ load_dotenv()
 # Initialize the app
 app = Flask(__name__)
 api = Api(app,prefix="/api/"+environ.get('API_VERSION'))
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('MYSQL_URI')

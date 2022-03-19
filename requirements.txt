@@ -6,3 +6,4 @@ Flask-SQLAlchemy
 stripe
 mariadb
 mysql
+flask-cors

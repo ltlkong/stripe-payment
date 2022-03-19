@@ -90,13 +90,11 @@ class PaymentResource(Resource):
         
         self.transactionService.updateSessionId(transaction, checkout['id'])
 
-        # Updating the payment token
-        self.orderClient.updatePaymentToken(args['orderId'], transaction.token)
-
         return {
             'order_id': args['orderId'],
             'payment_url': checkout['url'],
             'expires_at': checkout['expires_at'],
             'token': transaction.token,
+            'status': checkout['status'],
             } , 201
          

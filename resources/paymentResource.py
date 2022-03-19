@@ -71,6 +71,7 @@ class PaymentResource(Resource):
         parser.add_argument('orderId', type=str)
         parser.add_argument('currency', type=str)
         parser.add_argument('amount', type=int)
+        parser.add_argument('callbackUrl', type=str)
         args = parser.parse_args()
 
         # Store transaction in database
@@ -80,7 +81,7 @@ class PaymentResource(Resource):
             return {'message':'Error creating transaction'},500
 
         # Creating the checkout session from stripe api
-        sessionResponse  = self.stripeClient.createCheckoutSession(args['orderId'], args['currency'], args['amount'], transaction.token, ['card', 'alipay'])
+        sessionResponse  = self.stripeClient.createCheckoutSession(args['orderId'], args['currency'], args['amount'], transaction.token, ['card', 'alipay'], callbackUrl=args['callbackUrl'])
 
         checkout =sessionResponse[0]
         sessionMessage = sessionResponse[1]

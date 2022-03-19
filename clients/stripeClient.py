@@ -5,7 +5,7 @@ class StripeClient:
     def __init__(self):
         stripe.api_key = getenv('STRIPE_API_KEY')
 
-    def createCheckoutSession(self, orderId, currency, amount,token, methods):
+    def createCheckoutSession(self, orderId, currency, amount,token, methods, callbackUrl):
         try:
             order = self._createStripeOrder(orderId)
 
@@ -20,8 +20,8 @@ class StripeClient:
                 ],
                 mode='payment',
                 payment_method_types=methods,
-                success_url=getenv('STRIPE_PAYMENT_CALLBACK_URL')+'?token='+token,
-                cancel_url=getenv('STRIPE_PAYMENT_CALLBACK_URL')+'?token='+token,
+                success_url=callbackUrl+'?token='+token,
+                cancel_url=callbackUrl+'?token='+token,
             )
         except Exception as e:
             print(e)

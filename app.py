@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from flask_restful import Api
 from os import environ
 from dotenv import load_dotenv
@@ -14,10 +13,13 @@ app = Flask(__name__)
 api = Api(app,prefix="/api/"+environ.get('API_VERSION'))
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('MYSQL_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('MYSQL_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 # Routes
 init_routes(api)

@@ -1,0 +1,49 @@
+Date : 2022-03-19 01:48:28
+Directory : /Users/tielinli/Workspace/payment
+Total : 15 files,  247 codes, 20 comments, 101 blanks, all 368 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         10 |        196 |         15 |         78 |        289 |
+| YAML             |          1 |         20 |          0 |          6 |         26 |
+| Markdown         |          1 |         19 |          0 |         11 |         30 |
+| pip requirements |          1 |          6 |          0 |          0 |          6 |
+| Docker           |          1 |          6 |          0 |          1 |          7 |
+| Shell Script     |          1 |          0 |          5 |          5 |         10 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                             | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                |         15 |        247 |         20 |        101 |        368 |
+| clients                                                          |          2 |         54 |          0 |         19 |         73 |
+| common                                                           |          1 |          5 |          0 |          1 |          6 |
+| models                                                           |          2 |         13 |          0 |          4 |         17 |
+| resources                                                        |          1 |         66 |         10 |         27 |        103 |
+| services                                                         |          1 |         36 |          0 |         12 |         48 |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                         | language         | code       | comment    | blank      | total      |
++------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /Users/tielinli/Workspace/payment/Dockerfile                     | Docker           |          6 |          0 |          1 |          7 |
+| /Users/tielinli/Workspace/payment/README.md                      | Markdown         |         19 |          0 |         11 |         30 |
+| /Users/tielinli/Workspace/payment/app.py                         | Python           |         15 |          4 |          8 |         27 |
+| /Users/tielinli/Workspace/payment/clients/orderClient.py         | Python           |          7 |          0 |          3 |         10 |
+| /Users/tielinli/Workspace/payment/clients/stripeClient.py        | Python           |         47 |          0 |         16 |         63 |
+| /Users/tielinli/Workspace/payment/common/uuidUtil.py             | Python           |          5 |          0 |          1 |          6 |
+| /Users/tielinli/Workspace/payment/docker-compose.yml             | YAML             |         20 |          0 |          6 |         26 |
+| /Users/tielinli/Workspace/payment/migrate.py                     | Python           |          4 |          1 |          5 |         10 |
+| /Users/tielinli/Workspace/payment/models/share.py                | Python           |          2 |          0 |          2 |          4 |
+| /Users/tielinli/Workspace/payment/models/transaction.py          | Python           |         11 |          0 |          2 |         13 |
+| /Users/tielinli/Workspace/payment/requirements.txt               | pip requirements |          6 |          0 |          0 |          6 |
+| /Users/tielinli/Workspace/payment/resources/paymentResource.py   | Python           |         66 |         10 |         27 |        103 |
+| /Users/tielinli/Workspace/payment/routes.py                      | Python           |          3 |          0 |          2 |          5 |
+| /Users/tielinli/Workspace/payment/run.sh                         | Shell Script     |          0 |          5 |          5 |         10 |
+| /Users/tielinli/Workspace/payment/services/transactionService.py | Python           |         36 |          0 |         12 |         48 |
+| Total                                                            |                  |        247 |         20 |        101 |        368 |
++------------------------------------------------------------------+------------------+------------+------------+------------+------------+

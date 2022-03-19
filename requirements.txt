@@ -4,3 +4,5 @@ flask_restful
 python-dotenv 
 Flask-SQLAlchemy 
 stripe
+mariadb
+mysql

@@ -20,8 +20,8 @@ class StripeClient:
                 ],
                 mode='payment',
                 payment_method_types=methods,
-                success_url=getenv('DOMAIN')+getenv('STRIPE_PAYMENT_CALLBACK_URI')+'?token='+token,
-                cancel_url=getenv("DOMAIN")+getenv('STRIPE_PAYMENT_CALLBACK_URI')+'?token='+token,
+                success_url=getenv('STRIPE_PAYMENT_CALLBACK_URL')+'?token='+token,
+                cancel_url=getenv('STRIPE_PAYMENT_CALLBACK_URL')+'?token='+token,
             )
         except Exception as e:
             print(e)
@@ -59,4 +59,3 @@ class StripeClient:
 
     def _createStripeOrder(self,orderId):
         return stripe.Product.create(name=orderId)
-    

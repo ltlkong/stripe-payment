@@ -1,0 +1,17 @@
+"filename", "language", "Python", "YAML", "Markdown", "Shell Script", "pip requirements", "Docker", "comment", "blank", "total"
+"/Users/tielinli/Workspace/payment/Dockerfile", "Docker", 0, 0, 0, 0, 0, 6, 0, 1, 7
+"/Users/tielinli/Workspace/payment/README.md", "Markdown", 0, 0, 19, 0, 0, 0, 0, 11, 30
+"/Users/tielinli/Workspace/payment/app.py", "Python", 15, 0, 0, 0, 0, 0, 4, 8, 27
+"/Users/tielinli/Workspace/payment/clients/orderClient.py", "Python", 7, 0, 0, 0, 0, 0, 0, 3, 10
+"/Users/tielinli/Workspace/payment/clients/stripeClient.py", "Python", 47, 0, 0, 0, 0, 0, 0, 16, 63
+"/Users/tielinli/Workspace/payment/common/uuidUtil.py", "Python", 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/Users/tielinli/Workspace/payment/docker-compose.yml", "YAML", 0, 20, 0, 0, 0, 0, 0, 6, 26
+"/Users/tielinli/Workspace/payment/migrate.py", "Python", 4, 0, 0, 0, 0, 0, 1, 5, 10
+"/Users/tielinli/Workspace/payment/models/share.py", "Python", 2, 0, 0, 0, 0, 0, 0, 2, 4
+"/Users/tielinli/Workspace/payment/models/transaction.py", "Python", 11, 0, 0, 0, 0, 0, 0, 2, 13
+"/Users/tielinli/Workspace/payment/requirements.txt", "pip requirements", 0, 0, 0, 0, 6, 0, 0, 0, 6
+"/Users/tielinli/Workspace/payment/resources/paymentResource.py", "Python", 66, 0, 0, 0, 0, 0, 10, 27, 103
+"/Users/tielinli/Workspace/payment/routes.py", "Python", 3, 0, 0, 0, 0, 0, 0, 2, 5
+"/Users/tielinli/Workspace/payment/run.sh", "Shell Script", 0, 0, 0, 0, 0, 0, 5, 5, 10
+"/Users/tielinli/Workspace/payment/services/transactionService.py", "Python", 36, 0, 0, 0, 0, 0, 0, 12, 48
+"Total", "-", 196, 20, 19, 0, 6, 6, 20, 101, 368

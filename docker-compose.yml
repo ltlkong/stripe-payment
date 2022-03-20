@@ -1,13 +1,13 @@
-version: '3.7'
+version: '3.8'
 
 services:
-
-  mysql:
-    image: mariadb
+  db:
+    image: mysql
     restart: always
+    platform: linux/amd64
     environment:
-      - MARIADB_ROOT_PASSWORD=test
-      - MARIADB_DATABASE=payment
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=payment
     ports:
       - 3306:3306
     volumes:

@@ -4,6 +4,6 @@ flask_restful
 python-dotenv 
 Flask-SQLAlchemy 
 stripe
-mariadb
 mysql
+mysql-connector-python
 flask-cors

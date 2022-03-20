@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   db:
     image: mysql
@@ -20,5 +19,3 @@ services:
       - 5001:5001
     links:
     - db
-
-    

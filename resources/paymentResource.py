@@ -31,11 +31,15 @@ class PaymentResource(Resource):
         if checkout is None:
             return {'message':'Error retrieve payment session'},500
         
-        # Enum open, expired, complete
         status= checkout['status']
 
         if status != 'complete':
-            return {'order_id':transaction.orderId, 'payment_url':checkout['url'], 'status':status, 'payment':None},200
+            return {
+                'order_id':transaction.orderId, 'payment_url':checkout['url'],
+                'status':status,
+                'payment':None,
+                'expires_at': checkout['expires_at']
+            },200
 
         payment = self.stripeClient.retrievePaymentMethod(checkout['payment_intent'])
 
@@ -57,7 +61,7 @@ class PaymentResource(Resource):
                 'method':paymentMethod,
                 'amount':paymentAmount,
                 'currency':paymentCurrency,
-                'status':checkout['payment_status'], # Enum paid, unpaid
+                'status':checkout['payment_status'], 
             },
             'payment_url': checkout['url'],
             'expires_at': checkout['expires_at'],

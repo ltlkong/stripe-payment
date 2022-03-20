@@ -27,3 +27,47 @@
 ## Flow
 
 ![flow](./flow.drawio.png)
+
+## Methods
+
+prefix: /api/v1
+- GET: /payment?token={{token}} 
+    - Response:
+        ``` json
+        {
+            "order_id": "",
+            "payment_url": "",
+            "status": "open", // Enum open, expired, complete
+            "payment": {
+                "amount":50000,
+                "method":"card", // payment method, e.g. card, alipay
+                "status": "paid", // Enum paid, unpaid
+                "currency":"sgd" 
+            },
+            "expires_at":1647839607 // Time stamp
+
+            
+        }
+        ```
+- POST: /payment
+    - Parameters:
+        ``` json
+        {
+            "orderId":"",
+            "currency":"sgd",
+            "amount":50000, //cents
+            "callbackUrl":"" // after success/failure redirect to this
+        }
+        ```
+    - Response:
+        ``` json
+        {
+            "order_id": "",
+            "payment_url": "",
+            "expires_at": 1647839607,
+            "token": "", // Unique id to access payment data
+            "status": "open"
+        }
+        ```
+
+

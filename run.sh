@@ -4,6 +4,7 @@
 # docker build -t carmenlee2020/payment-service .
 # docker run -it -p 5001:5001 carmenlee2020/payment-service
 
+cp ./.env.dev ./.env
 docker-compose up -d
 
 

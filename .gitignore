@@ -49,6 +49,11 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Database
 data/
 
+# Code counter
 .VSCodeCounter/
+
+# Enviroment
+.env
